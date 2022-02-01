@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:picsum_gallery/data/repositories/photo_repository.dart';
+import 'package:picsum_gallery/logic/bloc/photo_bloc.dart';
 import 'package:picsum_gallery/presentation/screens/photo_list_screen/photo_list_screen.dart';
 
 import '../../core/constants/strings.dart';
@@ -13,8 +16,11 @@ class AppRouter {
     switch (settings.name) {
       case photoListScreen:
         return MaterialPageRoute(
-          builder: (_) => PhotoListScreen(
-            title: Strings.homeScreenTitle,
+          builder: (_) => BlocProvider(
+            create: (context) => PhotoBloc(photoRepository: PhotoRepository())..add(PhotoFetched(page: 0)),
+            child: const PhotoListScreen(
+              title: Strings.homeScreenTitle,
+            ),
           ),
         );
       default:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/strings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:picsum_gallery/logic/bloc/photo_bloc.dart';
 
 class PhotoListScreen extends StatelessWidget {
   const PhotoListScreen({Key? key, required this.title}) : super(key: key);
@@ -13,16 +13,31 @@ class PhotoListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              Strings.homeScreenCenterText,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: BlocBuilder<PhotoBloc, PhotoState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case PostStatus.initial:
+              return const SizedBox();
+            case PostStatus.loading:
+              return const SizedBox();
+            case PostStatus.success:
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      state.photos.length.toString(),
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ],
+                ),
+              );
+            case PostStatus.failure:
+              return const Text('something went wrong!');
+            default:
+              return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }
