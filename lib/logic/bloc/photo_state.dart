@@ -1,20 +1,20 @@
 part of 'photo_bloc.dart';
 
-enum PostStatus { initial, loading, success, failure }
+enum PhotoStatus { initial, loading, success, failure }
 
 class PhotoState extends Equatable {
   const PhotoState({
-    this.status = PostStatus.initial,
+    this.status = PhotoStatus.initial,
     this.photos = const <Photo>[],
     this.hasReachedMax = false,
   });
 
-  final PostStatus status;
+  final PhotoStatus status;
   final List<Photo> photos;
   final bool hasReachedMax;
 
   PhotoState copyWith({
-    PostStatus? status,
+    PhotoStatus? status,
     List<Photo>? photos,
     bool? hasReachedMax,
   }) {
@@ -27,7 +27,7 @@ class PhotoState extends Equatable {
 
   @override
   String toString() {
-    return '''PostState { status: $status, hasReachedMax: $hasReachedMax, posts: ${photos.length} }''';
+    return '''PhotoState { status: $status, hasReachedMax: $hasReachedMax, photos: ${photos.length} }''';
   }
 
   @override

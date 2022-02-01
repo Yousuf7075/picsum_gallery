@@ -25,11 +25,11 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   ) async {
     if (state.hasReachedMax) return;
     try {
-      if (state.status == PostStatus.initial) {
+      if (state.status == PhotoStatus.initial) {
         final photos = await photoRepository.getPhotos(
             page: event.page, limit: _photoLimit);
         return emit(state.copyWith(
-          status: PostStatus.success,
+          status: PhotoStatus.success,
           photos: photos,
           hasReachedMax: false,
         ));
@@ -40,13 +40,13 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(
-                status: PostStatus.success,
+                status: PhotoStatus.success,
                 photos: List.of(state.photos)..addAll(photos),
                 hasReachedMax: false,
               ),
             );
     } catch (_) {
-      return emit(state.copyWith(status: PostStatus.failure));
+      return emit(state.copyWith(status: PhotoStatus.failure));
     }
   }
 }
