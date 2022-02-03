@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:picsum_gallery/logic/bloc/photo_bloc.dart';
 import 'package:picsum_gallery/presentation/screens/photo_list_screen/widgets/photo_list_widget.dart';
+import 'package:picsum_gallery/presentation/screens/photo_list_screen/widgets/shimmer_loader.dart';
 import 'package:picsum_gallery/presentation/widgets/bottom_loader.dart';
 
 class PhotoListScreen extends StatefulWidget {
@@ -27,26 +29,34 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Text(
+          widget.title,
+          style: GoogleFonts.raleway(
+            color: Colors.black
+          )
+        ),
+        centerTitle: true,
       ),
       body: BlocBuilder<PhotoBloc, PhotoState>(
         builder: (context, state) {
           switch (state.status) {
             case PhotoStatus.initial:
-              return const Center(child: CircularProgressIndicator());
+              return const ShimmerLoader();
             case PhotoStatus.loading:
               return const SizedBox();
             case PhotoStatus.success:
               return GridView.builder(
+                padding: const EdgeInsets.all(5.0),
                   controller: _scrollController,
-                  shrinkWrap: true,
-                  physics: const PageScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   itemCount: state.hasReachedMax
                       ? state.photos.length
                       : state.photos.length + 1,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisExtent: 200,
+                      mainAxisExtent: 250,
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8),
                   itemBuilder: (BuildContext context, int index) {
@@ -59,7 +69,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
             case PhotoStatus.failure:
               return const Text('something went wrong!');
             default:
-              return const Center(child: CircularProgressIndicator());
+              return const ShimmerLoader();
           }
         },
       ),

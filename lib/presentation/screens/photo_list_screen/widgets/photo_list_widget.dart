@@ -10,20 +10,29 @@ class PhotoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
-      child: CachedNetworkImage(
-        imageUrl: photo.downloadUrl!,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
+      height: 250,
+      child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: CachedNetworkImage(
+          imageUrl: photo.downloadUrl!,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
+          placeholder: (context, url) => Image.asset(
+            "assets/images/loading.gif",
+            fit: BoxFit.fitHeight,
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
-        placeholder: (context, url) => const SizedBox(
-            height: 40, width: 40, child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
   }

@@ -1,8 +1,8 @@
 class Strings {
   // App
-  static const appTitle = 'App Name';
+  static const appTitle = 'Picsum';
 
   // HomeScreen
-  static const homeScreenTitle = 'Home Screen';
+  static const homeScreenTitle = 'Picsum';
   static const homeScreenCenterText = 'Welcome to Picsum Gallery!';
 }
