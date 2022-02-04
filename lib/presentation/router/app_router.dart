@@ -19,18 +19,27 @@ class AppRouter {
     switch (settings.name) {
       case photoListScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => PhotoBloc(photoRepository: PhotoRepository())
-              ..add(PhotoFetched(page: 0)),
-            child: const PhotoListScreen(
-              title: Strings.homeScreenTitle,
-            ),
-          ),
+          builder: (_) =>
+              BlocProvider(
+                create: (context){
+                  final photoBloc = PhotoBloc(photoRepository: PhotoRepository());
+                  final photoState = photoBloc.state;
+                  print("state-> ${photoState.status}");
+                  if(photoState.status != PhotoStatus.success){
+                    photoBloc.add(PhotoFetched(page: 0));
+                  }
+                  return photoBloc;
+                },
+                child: const PhotoListScreen(
+                  title: Strings.homeScreenTitle,
+                ),
+              ),
         );
       case photoFullScreen:
         final arguments = settings.arguments as String;
         return CupertinoPageRoute(
-            builder: (BuildContext context) => PhotoFullScreen(
+            builder: (BuildContext context) =>
+                PhotoFullScreen(
                   imageUrl: arguments,
                 ));
       default:

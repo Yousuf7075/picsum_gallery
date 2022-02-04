@@ -17,7 +17,6 @@ class HttpClient {
       {required int page, required int limit}) async {
     final response =
         await httpClient.get(Uri.parse(baseUrl + "page=$page&limit=$limit"));
-
     if (response.statusCode == 200) {
       final body = json.decode(response.body) as List;
       return body.map((dynamic json) {

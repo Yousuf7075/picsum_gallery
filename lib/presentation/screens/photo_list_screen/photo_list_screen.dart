@@ -87,9 +87,10 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
+    final photoBloc = context.read<PhotoBloc>();
     if (maxScroll == currentScroll) {
-      page = page + 1;
-      context.read<PhotoBloc>().add(PhotoFetched(page: page));
+      page = photoBloc.state.page + 1;
+      photoBloc.add(PhotoFetched(page: page));
     }
   }
 }
