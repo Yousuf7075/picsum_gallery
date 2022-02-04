@@ -24,7 +24,6 @@ class AppRouter {
                 create: (context){
                   final photoBloc = PhotoBloc(photoRepository: PhotoRepository());
                   final photoState = photoBloc.state;
-                  print("state-> ${photoState.status}");
                   if(photoState.status != PhotoStatus.success){
                     photoBloc.add(PhotoFetched(page: 0));
                   }

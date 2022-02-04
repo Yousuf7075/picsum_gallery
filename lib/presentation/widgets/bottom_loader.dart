@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BottomLoader extends StatelessWidget {
   const BottomLoader({Key? key}) : super(key: key);
@@ -7,8 +8,8 @@ class BottomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: SizedBox(
-        height: 24,
-        width: 24,
+        height: 30,
+        width: 30,
         child: CircularProgressIndicator(strokeWidth: 1.5),
       ),
     );

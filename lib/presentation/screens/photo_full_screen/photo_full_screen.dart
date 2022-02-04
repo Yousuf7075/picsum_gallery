@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 
 class PhotoFullScreen extends StatelessWidget {
@@ -38,49 +37,21 @@ class PhotoFullScreen extends StatelessWidget {
           Positioned(
             left: 20,
             top: 50,
-            child: Container(
-              height: 45,
-              width: 45,
-              decoration: const BoxDecoration(
-                  color: Colors.blueGrey, shape: BoxShape.circle),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.cancel,
-                  color: Colors.white,
-                ),
-              ),
+            child: CustomIconButton(
+              iconData: Icons.arrow_back,
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ),
           Positioned(
-            bottom: 30,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomButton(
-                    btnName: 'Share',
-                    iconData: Icons.share,
-                    onTap: () {
-                      Share.share(imageUrl);
-                    },
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  CustomButton(
-                    btnName: 'Set As Wallpaper',
-                    iconData: Icons.download,
-                    onTap: () {},
-                  )
-                ],
-              ),
+            top: 50,
+            right: 20,
+            child: CustomIconButton(
+              iconData: Icons.share,
+              onTap: () {
+                Share.share(imageUrl);
+              },
             ),
           )
         ],
@@ -89,15 +60,13 @@ class PhotoFullScreen extends StatelessWidget {
   }
 }
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
     Key? key,
-    required this.btnName,
     required this.iconData,
     required this.onTap,
   }) : super(key: key);
 
-  final String btnName;
   final IconData iconData;
   final GestureTapCallback onTap;
 
@@ -106,10 +75,10 @@ class CustomButton extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 50,
-          width: 50,
+          height: 40,
+          width: 40,
           decoration: const BoxDecoration(
-              color: Colors.blueGrey,
+              color: Colors.black26,
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: IconButton(
             onPressed: onTap,
@@ -122,11 +91,6 @@ class CustomButton extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Text(
-          btnName,
-          style: GoogleFonts.raleway(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-        )
       ],
     );
   }
