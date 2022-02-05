@@ -1,16 +1,18 @@
-# picsum_gallery
+# Picsum Gallery
 
-A new Flutter project.
+Photo gallery app developed in flutter using [Picsum API](https://picsum.photos/)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+![Picsum_App](https://user-images.githubusercontent.com/48477320/152643668-d0897400-90b5-4624-addf-0be75e273248.jpg)
 
-A few resources to get you started if this is your first Flutter project:
+## Features
+- Fetch API Response with bloc.
+- Infinite scroll.
+- Cahching API response with hydrated bloc.
+- Cahching images.
+- Sharing image link.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## UI Reference
+https://play.google.com/store/apps/details?id=com.tsvillain.wallbay
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
