@@ -1,5 +1,5 @@
 import 'package:picsum_gallery/data/http/http_client.dart';
-import 'package:picsum_gallery/data/models/models.dart';
+import 'package:picsum_gallery/features/photo_gallery/data/models/models.dart';
 
 class PhotoRepository {
   PhotoRepository({HttpClient? httpClient})

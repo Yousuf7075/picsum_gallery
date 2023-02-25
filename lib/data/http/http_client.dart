@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:picsum_gallery/data/models/models.dart';
+import 'package:picsum_gallery/features/photo_gallery/data/models/models.dart';
 
 class HttpClient {
   HttpClient({

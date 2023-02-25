@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-class PhotoFullScreen extends StatelessWidget {
-  const PhotoFullScreen({Key? key, required this.imageUrl}) : super(key: key);
+class PhotoDetailsPage extends StatelessWidget {
+  const PhotoDetailsPage({Key? key, required this.imageUrl}) : super(key: key);
 
   final String imageUrl;
 

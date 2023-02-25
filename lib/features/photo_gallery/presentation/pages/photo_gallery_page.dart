@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:picsum_gallery/logic/bloc/photo_bloc.dart';
-import 'package:picsum_gallery/presentation/screens/photo_list_screen/widgets/photo_list_widget.dart';
-import 'package:picsum_gallery/presentation/screens/photo_list_screen/widgets/shimmer_loader.dart';
-import 'package:picsum_gallery/presentation/widgets/bottom_loader.dart';
+import 'package:picsum_gallery/features/photo_gallery/presentation/bloc/photo_bloc.dart';
+import 'package:picsum_gallery/features/photo_gallery/presentation/widgets/widgets.dart';
+import 'package:picsum_gallery/widgets/bottom_loader.dart';
 
-class PhotoListScreen extends StatefulWidget {
-  const PhotoListScreen({Key? key, required this.title}) : super(key: key);
+class PhotoGalleryPage extends StatefulWidget {
+  const PhotoGalleryPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<PhotoListScreen> createState() => _PhotoListScreenState();
+  State<PhotoGalleryPage> createState() => _PhotoGalleryPageState();
 }
 
-class _PhotoListScreenState extends State<PhotoListScreen> {
+class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
   int page = 0;
   final _scrollController = ScrollController();
 
@@ -39,7 +38,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<PhotoBloc, PhotoState>(
+      body: BlocBuilder<PhotoGalleryBloc, PhotoGalleryState>(
         builder: (context, state) {
           switch (state.status) {
             case PhotoStatus.initial:
@@ -62,7 +61,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return (index >= state.photos.length)
                         ? const BottomLoader()
-                        : PhotoItem(
+                        : PhotoListItem(
                             photo: state.photos[index],
                           );
                   });
@@ -87,7 +86,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    final photoBloc = context.read<PhotoBloc>();
+    final photoBloc = context.read<PhotoGalleryBloc>();
     if (maxScroll == currentScroll) {
       page = photoBloc.state.page + 1;
       photoBloc.add(PhotoFetched(page: page));

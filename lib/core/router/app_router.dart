@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:picsum_gallery/core/constants/strings.dart';
+import 'package:picsum_gallery/core/exceptions/route_exception.dart';
 import 'package:picsum_gallery/data/repositories/photo_repository.dart';
-import 'package:picsum_gallery/logic/bloc/photo_bloc.dart';
-import 'package:picsum_gallery/presentation/screens/photo_full_screen/photo_full_screen.dart';
-import 'package:picsum_gallery/presentation/screens/photo_list_screen/photo_list_screen.dart';
-
-import '../../core/constants/strings.dart';
-import '../../core/exceptions/route_exception.dart';
+import 'package:picsum_gallery/features/photo_gallery/presentation/bloc/photo_bloc.dart';
+import 'package:picsum_gallery/features/photo_gallery/presentation/pages/photo_details_page.dart';
+import 'package:picsum_gallery/features/photo_gallery/presentation/pages/photo_gallery_page.dart';
 
 class AppRouter {
   static const String photoListScreen = '/';
@@ -22,14 +21,14 @@ class AppRouter {
           builder: (_) =>
               BlocProvider(
                 create: (context){
-                  final photoBloc = PhotoBloc(photoRepository: PhotoRepository());
+                  final photoBloc = PhotoGalleryBloc(photoRepository: PhotoRepository());
                   final photoState = photoBloc.state;
                   if(photoState.status != PhotoStatus.success){
                     photoBloc.add(PhotoFetched(page: 0));
                   }
                   return photoBloc;
                 },
-                child: const PhotoListScreen(
+                child: const PhotoGalleryPage(
                   title: Strings.homeScreenTitle,
                 ),
               ),
@@ -38,7 +37,7 @@ class AppRouter {
         final arguments = settings.arguments as String;
         return CupertinoPageRoute(
             builder: (BuildContext context) =>
-                PhotoFullScreen(
+                PhotoDetailsPage(
                   imageUrl: arguments,
                 ));
       default:

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:picsum_gallery/data/models/models.dart';
+import 'package:picsum_gallery/features/photo_gallery/data/models/models.dart';
 import 'package:picsum_gallery/data/repositories/photo_repository.dart';
 
 part 'photo_event.dart';
@@ -13,8 +13,8 @@ part 'photo_state.dart';
 
 const _photoLimit = 20;
 
-class PhotoBloc extends HydratedBloc<PhotoEvent, PhotoState> {
-  PhotoBloc({required this.photoRepository}) : super(const PhotoState()) {
+class PhotoGalleryBloc extends HydratedBloc<PhotoEvent, PhotoGalleryState> {
+  PhotoGalleryBloc({required this.photoRepository}) : super(const PhotoGalleryState()) {
     on<PhotoFetched>(_onPhotoFetched);
   }
 
@@ -22,7 +22,7 @@ class PhotoBloc extends HydratedBloc<PhotoEvent, PhotoState> {
 
   Future<void> _onPhotoFetched(
     PhotoFetched event,
-    Emitter<PhotoState> emit,
+    Emitter<PhotoGalleryState> emit,
   ) async {
     if (state.hasReachedMax) return;
     try {
@@ -59,12 +59,12 @@ class PhotoBloc extends HydratedBloc<PhotoEvent, PhotoState> {
   }
 
   @override
-  PhotoState? fromJson(Map<String, dynamic> json) {
-    return PhotoState.fromJson(json);
+  PhotoGalleryState? fromJson(Map<String, dynamic> json) {
+    return PhotoGalleryState.fromJson(json);
   }
 
   @override
-  Map<String, dynamic>? toJson(PhotoState state) {
+  Map<String, dynamic>? toJson(PhotoGalleryState state) {
     return state.toJson();
   }
 }

@@ -2,8 +2,8 @@ part of 'photo_bloc.dart';
 
 enum PhotoStatus { initial, loading, success, failure }
 
-class PhotoState extends Equatable {
-  const PhotoState({
+class PhotoGalleryState extends Equatable {
+  const PhotoGalleryState({
     this.status = PhotoStatus.initial,
     this.photos = const <Photo>[],
     this.hasReachedMax = false,
@@ -15,13 +15,13 @@ class PhotoState extends Equatable {
   final bool hasReachedMax;
   final int page;
 
-  PhotoState copyWith({
+  PhotoGalleryState copyWith({
     PhotoStatus? status,
     List<Photo>? photos,
     bool? hasReachedMax,
     int? page
   }) {
-    return PhotoState(
+    return PhotoGalleryState(
       status: status ?? this.status,
       photos: photos ?? this.photos,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
@@ -34,12 +34,12 @@ class PhotoState extends Equatable {
     return '''PhotoState { status: $status, hasReachedMax: $hasReachedMax, photos: ${photos.length} }''';
   }
 
-  factory PhotoState.fromJson(Map<String, dynamic> json) {
+  factory PhotoGalleryState.fromJson(Map<String, dynamic> json) {
     List<Photo> photos = [];
     jsonDecode(json['photos']).forEach((v) {
       photos.add(Photo.fromJson(v));
     });
-    return PhotoState(
+    return PhotoGalleryState(
       status: json["status"] == "PhotoStatus.success"
           ? PhotoStatus.success
           : PhotoStatus.initial,
