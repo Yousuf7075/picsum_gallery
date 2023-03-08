@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:picsum_gallery/core/error/exceptions.dart';
-import 'package:picsum_gallery/features/photo_gallery/data/models/photo.dart';
+import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo.dart';
 
 abstract class PhotoGalleryRemoteDataSource {
   Future<List<Photo>> getPhotos(int page);

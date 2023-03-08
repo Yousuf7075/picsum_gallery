@@ -1,20 +1,19 @@
-import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo_entity.dart';
-
-class Photo extends PhotoEntity {
+class Photo {
   Photo({
-    required String id,
-    required String author,
-    required int width,
-    required int height,
-    required String url,
-    required String downloadUrl,
-  }) : super(
-            id: id,
-            author: author,
-            width: width,
-            height: height,
-            url: url,
-            downloadUrl: downloadUrl);
+    this.id,
+    this.author,
+    this.width,
+    this.height,
+    this.url,
+    this.downloadUrl,
+  });
+
+  String? id;
+  String? author;
+  int? width;
+  int? height;
+  String? url;
+  String? downloadUrl;
 
   factory Photo.fromJson(Map<String, dynamic> json) => Photo(
         id: json["id"],
