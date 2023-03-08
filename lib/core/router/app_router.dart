@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:picsum_gallery/core/constants/strings.dart';
 import 'package:picsum_gallery/core/exceptions/route_exception.dart';
-import 'package:picsum_gallery/data/repositories/photo_repository.dart';
 import 'package:picsum_gallery/features/photo_gallery/presentation/bloc/photo_bloc.dart';
 import 'package:picsum_gallery/features/photo_gallery/presentation/pages/photo_details_page.dart';
 import 'package:picsum_gallery/features/photo_gallery/presentation/pages/photo_gallery_page.dart';
+import 'package:picsum_gallery/injection_container.dart';
 
 class AppRouter {
   static const String photoListScreen = '/';
@@ -21,7 +21,7 @@ class AppRouter {
           builder: (_) =>
               BlocProvider(
                 create: (context){
-                  final photoBloc = PhotoGalleryBloc(photoRepository: PhotoRepository());
+                  final photoBloc = sl<PhotoGalleryBloc>();
                   final photoState = photoBloc.state;
                   if(photoState.status != PhotoStatus.success){
                     photoBloc.add(PhotoFetched(page: 0));

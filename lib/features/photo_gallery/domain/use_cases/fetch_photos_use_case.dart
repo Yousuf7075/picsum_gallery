@@ -5,10 +5,10 @@ import 'package:picsum_gallery/core/use_cases/use_case.dart';
 import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo.dart';
 import 'package:picsum_gallery/features/photo_gallery/domain/repository/photo_gallery_repository.dart';
 
-class GetPhotoGalleryPhotos implements UseCase<List<Photo>, Params> {
+class FetchPhotosUseCase implements UseCase<List<Photo>, Params> {
   final PhotoGalleryRepository repository;
 
-  GetPhotoGalleryPhotos({required this.repository});
+  FetchPhotosUseCase({required this.repository});
 
   @override
   Future<Either<Failure, List<Photo>>> call(Params params) async {

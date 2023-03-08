@@ -4,21 +4,20 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:picsum_gallery/features/photo_gallery/data/models/models.dart';
-import 'package:picsum_gallery/data/repositories/photo_repository.dart';
+import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo.dart';
+import 'package:picsum_gallery/features/photo_gallery/domain/use_cases/fetch_photos_use_case.dart';
 
 part 'photo_event.dart';
 
 part 'photo_state.dart';
 
-const _photoLimit = 20;
-
 class PhotoGalleryBloc extends HydratedBloc<PhotoEvent, PhotoGalleryState> {
-  PhotoGalleryBloc({required this.photoRepository}) : super(const PhotoGalleryState()) {
+  PhotoGalleryBloc({required this.fetchPhotosUseCase})
+      : super(const PhotoGalleryState()) {
     on<PhotoFetched>(_onPhotoFetched);
   }
 
-  final PhotoRepository photoRepository;
+  final FetchPhotosUseCase fetchPhotosUseCase;
 
   Future<void> _onPhotoFetched(
     PhotoFetched event,
@@ -27,34 +26,39 @@ class PhotoGalleryBloc extends HydratedBloc<PhotoEvent, PhotoGalleryState> {
     if (state.hasReachedMax) return;
     try {
       if (state.status == PhotoStatus.initial) {
-        final photos = await photoRepository.getPhotos(
-            page: event.page, limit: _photoLimit);
-        return emit(state.copyWith(
-          status: PhotoStatus.success,
-          photos: photos,
-          hasReachedMax: false,
-          page: event.page
-        ));
-      }
-      final photos =
-          await photoRepository.getPhotos(page: event.page, limit: _photoLimit);
-      photos!.isEmpty
-          ? emit(state.copyWith(hasReachedMax: true))
-          : emit(
-              state.copyWith(
-                status: PhotoStatus.success,
-                photos: List.of(state.photos)..addAll(photos),
+        final photos = await fetchPhotosUseCase.call(Params(page: event.page));
+        photos.fold(
+            (failure) => emit(state.copyWith(
+                status: PhotoStatus.failure,
                 hasReachedMax: false,
-                  page: event.page
-              ),
-            );
+                page: event.page)),
+            (photos) => emit(state.copyWith(
+                status: PhotoStatus.success,
+                photos: photos,
+                hasReachedMax: false,
+                page: event.page)));
+      }
+      final photos = await fetchPhotosUseCase.call(Params(page: event.page));
+      photos.fold(
+          (failure) => emit(state.copyWith(
+              status: PhotoStatus.failure,
+              hasReachedMax: false,
+              page: event.page)),
+          (photos) => photos.isEmpty
+              ? emit(state.copyWith(hasReachedMax: true))
+              : emit(
+                  state.copyWith(
+                      status: PhotoStatus.success,
+                      photos: List.of(state.photos)..addAll(photos),
+                      hasReachedMax: false,
+                      page: event.page),
+                ));
     } catch (_) {
       return emit(state.copyWith(
           status: state.status,
           photos: state.photos,
           hasReachedMax: state.hasReachedMax,
-          page: state.page
-      ));
+          page: state.page));
     }
   }
 

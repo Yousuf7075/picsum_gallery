@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:picsum_gallery/core/router/app_router.dart';
-import 'package:picsum_gallery/features/photo_gallery/data/models/models.dart';
+import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo.dart';
 
 class PhotoListItem extends StatelessWidget {
   const PhotoListItem({Key? key, required this.photo}) : super(key: key);
