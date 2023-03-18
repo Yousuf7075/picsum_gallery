@@ -16,7 +16,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   http: ^0.13.4
   equatable: ^2.0.3
-  cached_network_image: ^3.1.0+1
+  cached_network_image: ^3.2.3
   google_fonts: ^2.2.0
   shimmer: ^2.0.0
   share: ^2.0.4
