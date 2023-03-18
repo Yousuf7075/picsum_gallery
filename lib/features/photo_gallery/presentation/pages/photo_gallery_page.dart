@@ -55,9 +55,8 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
                       : state.photos.length + 1,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisExtent: 250,
                       crossAxisSpacing: 8,
-                      mainAxisSpacing: 8),
+                      mainAxisSpacing: 8,),
                   itemBuilder: (BuildContext context, int index) {
                     return (index >= state.photos.length)
                         ? const BottomLoader()
@@ -93,3 +92,4 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
     }
   }
 }
+
