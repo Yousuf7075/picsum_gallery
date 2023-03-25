@@ -11,16 +11,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  bloc: ^8.0.2
-  hydrated_bloc: ^8.0.0
-  flutter_bloc: ^8.0.1
+  flutter_bloc: ^8.1.2
   http: ^0.13.4
   equatable: ^2.0.3
   cached_network_image: ^3.2.3
   google_fonts: ^2.2.0
   shimmer: ^2.0.0
   share: ^2.0.4
-  path_provider: ^2.0.8
   dartz: ^0.10.1
   get_it: ^7.2.0
 

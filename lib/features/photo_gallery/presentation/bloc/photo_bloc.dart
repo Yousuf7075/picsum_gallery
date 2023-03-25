@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:picsum_gallery/features/photo_gallery/domain/entities/photo.dart';
 import 'package:picsum_gallery/features/photo_gallery/domain/use_cases/fetch_photos_use_case.dart';
@@ -11,7 +10,7 @@ part 'photo_event.dart';
 
 part 'photo_state.dart';
 
-class PhotoGalleryBloc extends HydratedBloc<PhotoEvent, PhotoGalleryState> {
+class PhotoGalleryBloc extends Bloc<PhotoEvent, PhotoGalleryState> {
   PhotoGalleryBloc({required this.fetchPhotosUseCase})
       : super(const PhotoGalleryState()) {
     on<PhotoFetched>(_onPhotoFetched);
@@ -60,15 +59,5 @@ class PhotoGalleryBloc extends HydratedBloc<PhotoEvent, PhotoGalleryState> {
           hasReachedMax: state.hasReachedMax,
           page: state.page));
     }
-  }
-
-  @override
-  PhotoGalleryState? fromJson(Map<String, dynamic> json) {
-    return PhotoGalleryState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(PhotoGalleryState state) {
-    return state.toJson();
   }
 }

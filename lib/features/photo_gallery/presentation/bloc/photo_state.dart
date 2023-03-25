@@ -34,30 +34,6 @@ class PhotoGalleryState extends Equatable {
     return '''PhotoState { status: $status, hasReachedMax: $hasReachedMax, photos: ${photos.length} }''';
   }
 
-  factory PhotoGalleryState.fromJson(Map<String, dynamic> json) {
-    List<Photo> photos = [];
-    jsonDecode(json['photos']).forEach((v) {
-      photos.add(Photo.fromJson(v));
-    });
-    return PhotoGalleryState(
-      status: json["status"] == "PhotoStatus.success"
-          ? PhotoStatus.success
-          : PhotoStatus.initial,
-      photos: photos,
-      hasReachedMax: json["hasReachedMax"] as bool,
-      page: json["page"] as int,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "status": status.toString(),
-      "photos": jsonEncode(photos),
-      "hasReachedMax": hasReachedMax,
-      "page": page,
-    };
-  }
-
   @override
   List<Object> get props => [status, photos, hasReachedMax];
 }
